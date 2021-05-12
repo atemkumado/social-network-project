@@ -1,0 +1,55 @@
+<div class="detail container">
+    <div class="detail-header">
+
+
+    </div>
+    <div class="detail-body" id="container">
+        <% if( inform ){  %>
+
+
+        <div class="card detail-card mt-3" id="card_<%= inform.faculty %>">
+            <div class="card-header">
+
+                <div class="header-group">
+
+                    <h5 class="group-title"> <%= inform.title %> </h5>
+                    <div class="group-subtitle mb-2 text-muted" id="subtitle">
+                        <span class="user_created"><%= inform.user_created %> </span>
+                        <span class=" created"> | Date Submitted:<%= inform.createAt.toLocaleString()%></span>
+                    </div>
+                </div>
+
+                <div class=" dropdown " style="margin-left: auto;">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                        <a class="dropdown-item btn-del" href="/informs/delete/<%= inform.id %>"><i
+                                class="fas fa-trash-alt btn-del"></i></a>
+
+                        <a class="dropdown-item btn-edit" onclick="editInform('<%= inform.id %>')"
+                            name="btn-edit-article" data-toggle="modal" data-target="#editInformModal">
+                            <i class=" fas fa-edit btn-edit"></i></a>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <p class="card-text"><%= inform.content %> </p>
+                <a href="/detail/<%= inform.id %> " class="card-link">Xem thêm</a>
+            </div>
+        </div>
+     
+        <% } %>
+
+    </div>
+    <div class="detail-footer">
+
+    </div>
+
+
+</div>

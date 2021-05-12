@@ -1,8 +1,9 @@
 <div class="inform inform-container">
     <div class="inform-header">
         <div class="filter mb-2">
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                <option selected>Select Faculty</option>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="fillter()"
+                id="filter_faculty">
+                <option selected value="0">Select Faculty</option>
                 <option value="1">CNTT</option>
                 <option value="2">QTKD</option>
                 <option value="3">Law</option>
@@ -12,19 +13,21 @@
         <button type="button" class="btn btn-secondary btn-add-inform" data-toggle="modal"
             data-target="#postInformModal">Add new Inform</button>
     </div>
-    <div class="inform-body">
+    <div class="inform-body" id="container">
         <% if( informs ){  %>
         <% informs.forEach( inform =>{ %>
 
 
-        <div class="card inform-card mt-3">
+        <div class="card inform-card mt-3" id="card_<%= inform.faculty %>">
             <div class="card-header">
-                <div class="header-group">
-                    <h5 class="group-title"> <%= inform.title %> </h5>
-                    <h6 class="group-subtitle mb-2 text-muted">Khoa Công Nghệ Thông Tin | Date Submitted:
-                        <%= inform.createAt.toLocaleString()  %>
-                    </h6>
 
+                <div class="header-group">
+
+                    <h5 class="group-title"> <%= inform.title %> </h5>
+                    <div class="group-subtitle mb-2 text-muted" id="subtitle">
+                        <span class="user_created"><%= inform.user_created %> </span>
+                        <span class=" created"> | Date Submitted:<%= inform.createAt.toLocaleString()%></span>
+                    </div>
                 </div>
 
                 <div class=" dropdown " style="margin-left: auto;">
@@ -47,11 +50,8 @@
 
             </div>
             <div class="card-body">
-
-
                 <p class="card-text"><%= inform.content %> </p>
-                <a href="#" class="card-link">Xem thêm</a>
-
+                <a href="/detail/<%= inform.id %> " class="card-link">Xem thêm</a>
             </div>
         </div>
         <% }) %>
@@ -68,6 +68,7 @@
             <form class="modal-content edit-modal" method="POST">
                 <div class="modal-header">
                     <h5 class="modal__title" id="exampleModalLabel">Edit Announcement </h5>
+                    <input type="text" name="faculty" value=""></input>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -99,6 +100,7 @@
         <div class="modal-dialog" role="document">
             <form class="modal-content" action="/informs/add" method="POST">
                 <div class="modal-header">
+                    <input type="text" name="faculty" value="1"></input>
                     <h5 class="modal__title" id="exampleModalLabel">Create Announcement</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -128,21 +130,41 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
+
+
     function editInform(id) {
         let informs = `<%- JSON.stringify(informs) %>`
         informs = JSON.parse(informs)
         informs.forEach(inform => {
             if (inform._id == id) {
-                const title = inform.title
-                const content = inform.content
-                console.log(title, content)
-                $('[name="title"]').val(title)
-                $('[name="content"]').val(content)
+                const title = inform.title;
+                const content = inform.content;
+                console.log(title, content);
 
-                $('.edit-modal').attr("action", `/informs/update/${id}` + "?_method=PUT")
+
+                $('[name="title"]').val(title);
+                $('[name="content"]').val(content);
+
+                $('.edit-modal').attr("action", `/informs/update/${id}` + "?_method=PUT");
             }
         })
+    }
+
+
+
+    function fillter() {
+        $(".card").hide();
+        let fillter = $('#filter_faculty').val();
+
+        if (fillter != 0) {
+            $("#card_" + fillter).show();
+        } else {
+            $(".card").show();
+        }
+
+
+
     }
 
 </script>

@@ -9,6 +9,10 @@ const informSchema = new Schema({
         type: String,
         required: true
     },
+    faculty: {
+        type: Number,
+        required: true
+    },
     createAt: {
         type: Date,
         default: Date.now

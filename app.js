@@ -6,6 +6,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var articleRouter = require("./routes/article")
 var informRouter = require("./routes/inform")
+var detailRouter = require("./routes/detail")
 
 
 // setup mongoose
@@ -35,9 +36,9 @@ app.use("/users", usersRouter);
 
 
 
-
 app.use("/articles", articleRouter)
 app.use("/informs", informRouter)
+app.use("/detail", detailRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
