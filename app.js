@@ -1,3 +1,4 @@
+require('dotenv').config()
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -7,6 +8,23 @@ var usersRouter = require("./routes/users");
 var articleRouter = require("./routes/article")
 var informRouter = require("./routes/inform")
 var detailRouter = require("./routes/detail")
+var profileRouter = require("./routes/profile")
+
+
+const flash = require('express-flash')
+const session = require('express-session')
+const fs = require('fs')
+require("./passport-setup")
+var UserRouter = require("./routes/userrouter")
+
+
+var passport = require("passport")
+var bodyParser = require("body-parser")
+var LocalStrategy = require("passport-local")
+var passportLocalMongoose = require("passport-local-mongoose")
+
+
+
 
 
 // setup mongoose
@@ -28,17 +46,32 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: false }));
 app.set("layout", "./layouts/layout")
 app.set("javascripts", "./javascripts/fileUpload")
+app.use(flash());
+
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(session({
+    secret: "Any normal Word",       //decode or encode session
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded(
+    { extended: false }
+))
 
 
 // routes
-app.use("/", indexRouter);
 app.use("/users", usersRouter);
-
+app.use("/user", UserRouter);
+app.use("/", indexRouter)
 
 
 app.use("/articles", articleRouter)
 app.use("/informs", informRouter)
 app.use("/detail", detailRouter)
+app.use("/profile", profileRouter)
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
