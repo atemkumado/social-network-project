@@ -21,7 +21,7 @@ router.get('/login', (req, res) => {
         return res.redirect('/')
     }
     const error = req.flash('error') || ''
-    res.render('login', { error })
+    res.render('login')
 })
 
 const loginValidator = [
@@ -139,13 +139,6 @@ router.post('/register', regisvalidator, async (req, res) => {
 
 
 
-const isLoggedIn = (req, res, next) => {
-    if (req.user) {
-        next();
-    } else {
-        res.sendStatus(401);
-    }
-}
 
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

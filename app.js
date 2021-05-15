@@ -59,17 +59,28 @@ app.use(bodyParser.urlencoded(
     { extended: false }
 ))
 
+//Middleware check login
+function authChecker(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        error = ""
+        res.render('login', { error });
+    }
+}
+
+
 
 // routes
 app.use("/users", usersRouter);
 app.use("/user", UserRouter);
-app.use("/", indexRouter)
+app.use("/", authChecker, indexRouter)
 
 
-app.use("/articles", articleRouter)
-app.use("/informs", informRouter)
-app.use("/detail", detailRouter)
-app.use("/profile", profileRouter)
+app.use("/articles", authChecker, articleRouter)
+app.use("/informs", authChecker, informRouter)
+app.use("/detail", authChecker, detailRouter)
+app.use("/profile", authChecker, profileRouter)
 
 
 
