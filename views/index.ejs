@@ -1,13 +1,13 @@
 <div class="row pt-3">
   <!-- Menu Faculty-->
   <div class="col-sm-2 " style="border-right: 0.1px solid; border-color: rgb(184, 186, 189);">
-    <div class="container pt-2" style="background-color: white;">
+    <!-- <div class="container pt-2" style="background-color: white;">
       <a class="dropdown-item" href="/informs">InForm TDTU</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">CNTT</a>
+      <div class="dropdown-divider"></div> -->
+    <!-- <a class="dropdown-item" href="#">CNTT</a>
       <a class="dropdown-item" href="#">QTKD</a>
-      <a class="dropdown-item" href="#">MARKETING</a>
-    </div>
+      <a class="dropdown-item" href="#">MARKETING</a> -->
+    <!-- </div> -->
 
   </div>
   <!-- Middle -->
@@ -53,54 +53,9 @@
     <!-- ARTICLE CONTAINER-->
 
 
-    <% if(articles){%>
-    <% articles.forEach(article => { %>
+    <% if(articles  ){%>
+    <%- include('./partials/article_view.ejs') %>
 
-    <div class="card article">
-      <div class="card-header">
-
-        <img src="<%= article.avatar %>" alt="article" class="header-icon">
-        <div class="header-group ml-2">
-          <span class="group-title"><strong><%= article.username %> </strong></span>
-          <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
-        </div>
-
-        <div class="dropdown" style="margin-left: auto;">
-          <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <i class="fas fa-ellipsis-v"></i>
-          </button>
-
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-            <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
-                class="fas fa-trash-alt btn-del"></i></a>
-
-            <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')" name="btn-edit-article"
-              data-toggle="modal" data-target="#editArticleModal">
-              <i class=" fas fa-edit btn-edit"></i></a>
-
-          </div>
-        </div>
-
-      </div>
-
-      <div class="card-body">
-        <p class="card-text">
-          <%= article.content %>
-        </p>
-        <% if (article.imageSrc){ %>
-
-        <img src="<%=article.imageSrc%>" alt="img" class="card-image" id="<%= article.id %>">
-        <% } %>
-
-      </div>
-      <div class="card-footer mt-3">
-        <button class="btn like btn-outline-primary">Like</button>
-        <button class="btn cmt btn-outline-success" onclick="comment()">Comment</button>
-      </div>
-    </div>
-    <% }); %>
     <%} %>
   </div>
 
@@ -144,14 +99,29 @@
   <div class="col-sm-3" style="border-left: 0.1px solid; border-color: rgb(184, 186, 189);">
     <div class="component__Inform" style="background-color: white;">
       <div class="card">
-        <div class="card-header">
-          New Inform
-        </div>
+        <a class="card-header" style="text-align: center; color: black; " href="/informs">
+          <strong>Inform</strong>
+        </a>
+        <% if(typeof informs !== undefined){%>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">News 1</li>
-          <li class="list-group-item">News 2</li>
-          <li class="list-group-item">News 3</li>
+          <% informs.forEach(inform =>{%>
+
+
+          <li class="list-group-item">
+            <div class="card">
+              <div class="card-header" style="background-color: rgb(196, 200, 209);">
+                <a href="/detail/<%= inform.id %> " style="color: black;" class="card-link"> <%= inform.title %></a>
+              </div>
+              <div class="card-body text-truncate" style="background-color: rgb(250, 250, 250);"><%= inform.content %>
+              </div>
+            </div>
+
+          </li>
+          <%  }) %>
+
+
         </ul>
+        <%} %>
       </div>
     </div>
   </div>
@@ -160,36 +130,9 @@
 
 <script>
 
-  function editArticle(id) {
-    let articles = `<%- JSON.stringify(articles) %>`
-    articles = JSON.parse(articles)
-    articles.forEach(article => {
-      if (article._id == id) {
-
-        const content = article.content
-        console.log(content)
-        const imageSrc = $(`[id=${id}]`).attr("src")
-        $('[name="content"]').val(content)
-        $('.container.edit-article').append("<img class='edit-image'> </img>")
-
-        $('.edit-modal').attr("action", `/articles/update/${id}` + "?_method=PUT")
-        $(document).ready(e => {
-          $('.edit-image').attr("src", imageSrc)
-        })
-      }
-    })
-
-  }
-  $("#editArticleModal").on("hidden.bs.modal", function () {
-    $('.edit-image').remove()
-    $('[name="edit-content"]').val("")
-
-  });
 
 
-  function comment() {
-    console.log("cmt")
-  }
 </script>
+
 
 </html>

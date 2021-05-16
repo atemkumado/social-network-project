@@ -12,11 +12,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    class: {
+    avatar: {
         type: String,
-
     },
-    Department: {
+    class: {
         type: String,
 
     },

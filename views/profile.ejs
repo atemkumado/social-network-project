@@ -11,86 +11,91 @@
 <body>
     <div class="container">
 
-      
+
 
 
 
         <div class="row">
 
             <!-- GOOGLE INFORMATION -->
-            <div class="col-sm-4" >
+            <div class="col-sm-4">
                 <div class="page-header text-center ">
                     <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-                    
-                    
+
+
                 </div>
 
                 <div class="well" style="padding-bottom: 30px; padding-left: 30px; background-color: white;">
                     <h3 class="text-danger"><span class="fa fa-google-plus"></span> Profile</h3>
                     <% if(user){ %>
-                        <p style="padding-bottom: 10px;"><img src="<%=user.pic%>" width="100" height="100" alt=""></p>
-                        
-                        <strong>Email</strong>: <%= user.email %><br>
-                        <strong>Full Name</strong>: <%= user.name %><br>
-                        
-                    
+                    <p style="padding-bottom: 10px;"><img src="<%=user.pic%>" width="100" height="100" alt=""></p>
+
+                    <strong>Email</strong>: <%= user.email %><br>
+                    <strong>Full Name</strong>: <%= user.name %><br>
+
+
                     <% } %>
-                    
+
                 </div>
+                <% if(user.name === "admin"){%>
+                <a href="/user/management" class="btn btn-secondary" style="width: 120px;">System</a>
+
+                <%} %>
                 <a href="/user/logout" class="btn btn-secondary" style="width: 120px;">Logout</a>
+
             </div>
             <div class="col-sm-8 ">
-            <% if(articles){%>
-            <% articles.forEach(article => { %>
+                <% if(articles){%>
+                <% articles.forEach(article => { %>
 
 
-            <div class="card article">
-                <div class="card-header">
+                <div class="card article">
+                    <div class="card-header">
 
-                    <img src="<%= article.avatar %>" alt="article" class="header-icon">
-                    <div class="header-group ml-2">
-                        <span class="group-title"><strong><%= article.username %> </strong></span>
-                        <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
-                    </div>
-
-                    <div class="dropdown" style="margin-left: auto;">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                            <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
-                                    class="fas fa-trash-alt btn-del"></i></a>
-
-                            <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')"
-                                name="btn-edit-article" data-toggle="modal" data-target="#editArticleModal">
-                                <i class=" fas fa-edit btn-edit"></i></a>
-
+                        <img src="<%= article.avatar %>" alt="article" class="header-icon">
+                        <div class="header-group ml-2">
+                            <span class="group-title"><strong><%= article.username %> </strong></span>
+                            <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
                         </div>
+
+                        <div class="dropdown" style="margin-left: auto;">
+                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
+                                        class="fas fa-trash-alt btn-del"></i></a>
+
+                                <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')"
+                                    name="btn-edit-article" data-toggle="modal" data-target="#editArticleModal">
+                                    <i class=" fas fa-edit btn-edit"></i></a>
+
+                            </div>
+                        </div>
+
                     </div>
 
+                    <div class="card-body">
+                        <p class="card-text">
+                            <%= article.content %>
+                        </p>
+                        <% if (article.imageSrc){ %>
+
+                        <img src="<%=article.imageSrc%>" alt="img" class="card-image" id="<%= article.id %>">
+                        <% } %>
+
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <p class="card-text">
-                        <%= article.content %>
-                    </p>
-                    <% if (article.imageSrc){ %>
 
-                    <img src="<%=article.imageSrc%>" alt="img" class="card-image" id="<%= article.id %>">
-                    <% } %>
 
-                </div>
+                <% }); %>
+                <%} %>
             </div>
-
-
-
-            <% }); %>
-            <%} %>
         </div>
-    </div>
 
     </div>
 

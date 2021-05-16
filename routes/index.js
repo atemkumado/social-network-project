@@ -5,15 +5,22 @@ var expressLayouts = require('express-ejs-layouts');
 // const { route } = require('./user');
 
 const Article = require('./../models/article')
+const Comment = require('./../models/comment')
+const Inform = require('./../models/inform')
+
 router.use(expressLayouts)
 
 /* GET home page. */
 router.get('/', async function (req, res) {
     try {
         user = req.session.user;
-        let articles = await Article.find();
+        var articles = await Article.find();
         articles = articles.reverse()
-        res.render('index', { articles, user });
+        var comments = await Comment.find();
+
+        var informs = await Inform.find();
+        console.log(informs)
+        res.render('index', { articles, user, comments, informs });
     } catch (err) {
         console.log(err)
     }

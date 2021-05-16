@@ -81,6 +81,26 @@ html {
   opacity: 1 !important;
 }
 
+.comment-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.comment-container .card-content {
+  margin-left: 70px;
+  padding-bottom: -10px;
+}
+
+.comment-container .header {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
 .post__icon {
   margin: auto 10px auto 0px;
   vertical-align: middle;

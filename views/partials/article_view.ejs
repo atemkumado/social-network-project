@@ -1,0 +1,87 @@
+<% var i = 0 %>
+
+<% articles.forEach(article => { %>
+<% i =i+1 %>
+
+<div class="card article" id="<%= i %>">
+    <div class="card-header">
+
+        <img src="<%= article.avatar %>" alt="article" class="header-icon">
+        <div class="header-group ml-2">
+            <span class="group-title"><strong><%= article.username %> </strong></span>
+            <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
+        </div>
+
+        <div class="dropdown" style="margin-left: auto;">
+            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
+                        class="fas fa-trash-alt btn-del"></i></a>
+
+                <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')" name="btn-edit-article"
+                    data-toggle="modal" data-target="#editArticleModal">
+                    <i class=" fas fa-edit btn-edit"></i></a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+        <p class="card-text">
+            <%= article.content %>
+        </p>
+        <% if (article.imageSrc){ %>
+
+        <img src="<%=article.imageSrc%>" alt="img" class="card-image" id="<%= article.id %>">
+        <% } %>
+
+    </div>
+    <% if(typeof comments !== undefined) {%>
+    <% comments.forEach(comment =>{ %>
+    <% if(comment.article_id === article.id){ %>
+
+
+    <div class="card comment-container mt-2">
+        <div class="header">
+            <img class=" post__icon" src="<%= comment.user_avt %>" alt="avt">
+            <span><strong><%= comment.user_cmt %></strong></span>
+        </div>
+
+
+
+        <p class="card-content"><%= comment.content %> </p>
+          
+            <a class="btn m ml-auto" href="/comment/delete/<%= comment.id %>" style="position:absolute; right:0; top:0" name="deleteComment">x</small></a>
+       
+
+    </div>
+
+
+    <%} %>
+    <%}) %>
+    <%} %>
+    <div class="card-footer mt-3">
+
+        <form action="/comment" method="POST">
+            <input type="hidden" value="<%= user.id %>" name="user_id">
+            <input type="hidden" value="<%= article.id %>" name="article_id">
+            <div class="d-flex flex-row align-items-start"><img src="<%= user.pic  %> " alt="article"
+                    class="post__icon"><textarea class="form-control ml-1 shadow-none textarea"
+                    name="content"></textarea>
+            </div>
+            <div class="mt-2 text-right"><button class="btn cmt btn-outline-success" type="submit">Comment</button>
+        </form>
+
+    </div>
+</div>
+</div>
+
+
+
+<% }); %>

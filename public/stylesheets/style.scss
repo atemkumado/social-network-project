@@ -68,6 +68,23 @@ html{
 .modal.show{
   opacity: 1 !important;
 }
+.comment-container{
+  display: flex;
+  flex-direction: row;
+  
+    .card-content{
+      margin-left: 70px;
+      padding-bottom: -10px;
+    
+  }
+  .header{
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  
+}
+
 .post__icon{
     margin: auto 10px auto 0px;
     vertical-align: middle;

@@ -138,7 +138,28 @@ router.post('/register', regisvalidator, async (req, res) => {
 })
 
 
+users.findOne({ role: "admin" })
+    .then(async (acc) => {
 
+        if (!acc) {
+
+            let admin = new users({
+                username: "admin",
+                password: "admin",
+                role: "admin"
+            })
+            try {
+
+                var created_admin = await admin.save();
+                console.log("created_user", created_admin);
+
+            } catch (e) {
+                console.log("ERROR in create admin:  ", e)
+            }
+
+            admin.save();
+        }
+    });
 
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -161,7 +182,8 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
                     let usernew = new UserSV({
                         email: email,
                         role: "student",
-                        name: name
+                        name: name,
+                        avatar: pic
                     })
                     try {
 
@@ -177,9 +199,10 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 
                 let user = {
                     id: (acc) ? acc._id : created_user._id,
-                    name: req.user.displayName,
-                    email: req.user.emails[0].value,
-                    pic: req.user.photos[0].value, role: "student"
+                    name,
+                    email,
+                    pic,
+                    role: "student"
                 }
 
                 req.session.user = user

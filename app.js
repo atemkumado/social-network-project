@@ -9,6 +9,8 @@ var articleRouter = require("./routes/article")
 var informRouter = require("./routes/inform")
 var detailRouter = require("./routes/detail")
 var profileRouter = require("./routes/profile")
+var commentRouter = require("./routes/comment")
+
 
 
 const flash = require('express-flash')
@@ -82,6 +84,7 @@ app.use("/articles", articleRouter)
 app.use("/informs", informRouter)
 app.use("/detail", detailRouter)
 app.use("/profile", profileRouter)
+app.use("/comment", commentRouter)
 
 
 
