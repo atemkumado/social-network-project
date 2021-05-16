@@ -56,9 +56,10 @@
 
 
         <p class="card-content"><%= comment.content %> </p>
-          
-            <a class="btn m ml-auto" href="/comment/delete/<%= comment.id %>" style="position:absolute; right:0; top:0" name="deleteComment">x</small></a>
-       
+        <% if(user.name == comment.user_cmt) {%>
+        <a class="btn m ml-auto" href="/comment/delete/<%= comment.id %>" style="position:absolute; right:0; top:0"
+            name="deleteComment">x</small></a>
+        <% } %>
 
     </div>
 
