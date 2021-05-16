@@ -4,7 +4,7 @@ var express = require("express");
 var path = require("path");
 var logger = require("morgan");
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+
 var articleRouter = require("./routes/article")
 var informRouter = require("./routes/inform")
 var detailRouter = require("./routes/detail")
@@ -68,19 +68,20 @@ function authChecker(req, res, next) {
         res.render('login', { error });
     }
 }
+app.use("/user", UserRouter);
 
-
+app.use(authChecker);
 
 // routes
-app.use("/users", usersRouter);
-app.use("/user", UserRouter);
-app.use("/", authChecker, indexRouter)
 
 
-app.use("/articles", authChecker, articleRouter)
-app.use("/informs", authChecker, informRouter)
-app.use("/detail", authChecker, detailRouter)
-app.use("/profile", authChecker, profileRouter)
+app.use("/", indexRouter)
+
+
+app.use("/articles", articleRouter)
+app.use("/informs", informRouter)
+app.use("/detail", detailRouter)
+app.use("/profile", profileRouter)
 
 
 

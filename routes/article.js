@@ -1,15 +1,22 @@
 const express = require('express')
 const Article = require('./../models/article')
-const { route } = require('./users')
+
 const router = express.Router()
 
 const imageMineTypes = ['image/jpeg', 'image/png', 'image/gif']
 
 router.post('/', async (req, res) => {
     console.log("OK")
+    const user_id = req.session.user.id;
+    const username = req.session.user.name;
+    const avatar = req.session.user.pic;
     const content = req.body.content;
     const image = req.body.image || null
+
     const article = new Article({
+        user_id,
+        username,
+        avatar,
         content
     })
     saveArticle(article, image)

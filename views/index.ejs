@@ -15,7 +15,7 @@
   <div class="col-sm-7 ">
 
     <div class="post mb-3">
-      <img src="images/profile.png" alt="article" class="post__icon">
+      <img src="<%= user.pic %> " alt="article" class="post__icon">
       <input data-backdrop="false" type="text" class="post__input form-control " data-toggle="modal"
         data-target="#postArticleModal" placeholder="What do you think ? " aria-describedby="basic-addon1" />
     </div>
@@ -59,9 +59,9 @@
     <div class="card article">
       <div class="card-header">
 
-        <img src="images/profile.png" alt="article" class="header-icon">
+        <img src="<%= article.avatar %>" alt="article" class="header-icon">
         <div class="header-group ml-2">
-          <span class="group-title"><strong>You</strong></span>
+          <span class="group-title"><strong><%= article.username %> </strong></span>
           <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
         </div>
 
@@ -97,7 +97,7 @@
       </div>
       <div class="card-footer mt-3">
         <button class="btn like btn-outline-primary">Like</button>
-        <button class="btn cmt btn-outline-success">Comment</button>
+        <button class="btn cmt btn-outline-success" onclick="comment()">Comment</button>
       </div>
     </div>
     <% }); %>
@@ -186,6 +186,10 @@
 
   });
 
+
+  function comment() {
+    console.log("cmt")
+  }
 </script>
 
 </html>

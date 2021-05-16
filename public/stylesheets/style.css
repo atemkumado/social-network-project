@@ -8,6 +8,15 @@
 html {
   background-color: #e7eaf1;
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-bottom: 40px;
+}
+
+.navbar-username {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .navbar-avatar {
@@ -72,6 +81,14 @@ html {
   opacity: 1 !important;
 }
 
+.post__icon {
+  margin: auto 10px auto 0px;
+  vertical-align: middle;
+  width: 35px;
+  height: 35px;
+  border-radius: 40px;
+}
+
 .card.article {
   margin: 0px auto;
   max-width: 700px;
@@ -101,6 +118,7 @@ html {
   vertical-align: middle;
   width: 35px;
   height: 35px;
+  border-radius: 40px;
 }
 
 .card.article .card-header .group-subtitle {
@@ -128,6 +146,13 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding-bottom: 30px;
+}
+
+.card.article .card-body .card-text {
+  padding-left: 30px;
+  padding-bottom: 30px;
+  font-size: medium;
 }
 
 .card.article .card-body .card-image {

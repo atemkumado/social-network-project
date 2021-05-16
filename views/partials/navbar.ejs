@@ -1,6 +1,10 @@
 <div class="header pa">
     <nav class="navbar navbar-light bg-dark">
         <a class="navbar-brand pl-3" style="color:white" href="/">Homepage</a>
-        <a href="/profile"><img src="images/profile.png" alt="Avatar" class="navbar-avatar mr-2"> </a>
+        <span class="navbar-username" style="color: aliceblue;"><%= user.name %> </span>
+        <a href="/profile">
+
+            <img src="<%= user.pic  %> " alt="Avatar" class="navbar-avatar mr-2">
+        </a>
     </nav>
 </div>

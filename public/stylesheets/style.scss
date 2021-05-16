@@ -2,12 +2,19 @@
   margin:0;
   padding:0;
   box-sizing: border-box;
+  
 }
 html{
     background-color: rgb(231, 234, 241);
      font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+     padding-bottom: 40px;
   }
 
+.navbar-username{
+  display: flex;
+  margin-left: auto;
+  margin-right: 10px;
+}
 .navbar-avatar {
   margin-left: auto;
   vertical-align: middle;
@@ -15,6 +22,7 @@ html{
   height: 40px;
   border-radius: 50%;
 }
+
 
 .row{
   background-color: rgb(231, 234, 241);
@@ -60,7 +68,13 @@ html{
 .modal.show{
   opacity: 1 !important;
 }
-
+.post__icon{
+    margin: auto 10px auto 0px;
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    border-radius: 40px;
+  }
 .card.article{
   margin: 0px auto;
   max-width: 700px;
@@ -70,6 +84,8 @@ html{
   border-radius: 10px;
   border: 1px rgb(199, 198, 198) solid;
   
+  
+
   .card-header{
     display:flex;
     border-top-right-radius: 18px;
@@ -82,7 +98,8 @@ html{
       margin: auto 10px auto 0px;
       vertical-align: middle;
       width: 35px;
-    height: 35px;
+      height: 35px;
+      border-radius: 40px;
     }
     .group-subtitle{
       font-size: 12px;
@@ -103,6 +120,12 @@ html{
   .card-body{
     display: flex;
     flex-direction: column; 
+    padding-bottom: 30px;
+    .card-text{
+      padding-left: 30px;
+      padding-bottom: 30px;
+      font-size: medium;
+    }
     .card-image{
       margin:  auto;
       max-height: 300px;
@@ -120,6 +143,9 @@ html{
   }
   
 }
+
+
+
 .inform{
 
   border-radius: 8px;
@@ -150,9 +176,11 @@ html{
    width:100%;
    .card{
     background-color: rgba(238, 240, 246, 0.472);
+    
     &-header{
       display: flex;
       flex-direction: row;
+     
       
 
     }

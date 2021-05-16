@@ -21,7 +21,7 @@ router.get('/login', (req, res) => {
         return res.redirect('/')
     }
     const error = req.flash('error') || ''
-    res.render('login')
+    res.render('login', { error })
 })
 
 const loginValidator = [
