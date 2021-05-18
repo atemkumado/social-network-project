@@ -11,22 +11,16 @@ var detailRouter = require("./routes/detail")
 var profileRouter = require("./routes/profile")
 var commentRouter = require("./routes/comment")
 
-
-
 const flash = require('express-flash')
 const session = require('express-session')
 const fs = require('fs')
 require("./passport-setup")
 var UserRouter = require("./routes/userrouter")
 
-
 var passport = require("passport")
 var bodyParser = require("body-parser")
 var LocalStrategy = require("passport-local")
 var passportLocalMongoose = require("passport-local-mongoose")
-
-
-
 
 
 // setup mongoose
@@ -61,15 +55,24 @@ app.use(bodyParser.urlencoded(
     { extended: false }
 ))
 
+
+const users = require('./models/user');
+
+
+
 //Middleware check login
 function authChecker(req, res, next) {
     if (req.session.user) {
         next();
     } else {
         error = ""
-        res.render('login', { error });
+        res.redirect("/user/login");
     }
 }
+
+
+
+
 app.use("/user", UserRouter);
 
 app.use(authChecker);

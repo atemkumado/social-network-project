@@ -11,4 +11,8 @@ router.get('/', async (req, res) => {
     return res.render("profile", { user, articles });
 })
 
+
+router.get('/system', (req, res) => {
+    return res.send("Authentication")
+})
 module.exports = router

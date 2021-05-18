@@ -16,7 +16,36 @@ require("../passport-setup")
 router.use(passport.initialize())
 router.use(passport.session())
 
-router.get('/login', (req, res) => {
+function createAdmin(req, res, next) {
+    users.findOne({ username: "admin" })
+        .then(async (acc) => {
+
+            if (!acc) {
+
+                let admin = new users({
+                    username: "admin",
+                    password: bcrypt.hashSync("admin", 10),
+                    avatar: "/images/admin.png",
+                    role: 1
+                })
+                try {
+
+                    var created_admin = await admin.save();
+                    console.log("created_user", created_admin);
+
+                } catch (e) {
+                    console.log("ERROR in create admin:  ", e)
+                }
+
+                admin.save();
+                next();
+            } else {
+                next();
+            }
+        });
+}
+
+router.get('/login', createAdmin, (req, res) => {
     if (req.session.user) {
         return res.redirect('/')
     }
@@ -24,24 +53,33 @@ router.get('/login', (req, res) => {
     res.render('login', { error })
 })
 
+
+
 const loginValidator = [
     check('username').exists().withMessage('Vui lòng nhập tên đăng nhập').notEmpty().withMessage('Không được để trống tên đăng nhập').isLength({ min: 5 }).withMessage('Tên đăng nhập phải từ 5 ký tự'),
-    check('password').exists().withMessage('Vui lòng nhập mật khẩu').notEmpty().withMessage('Không được để trống mật khẩu').isLength({ min: 6 }).withMessage('Mật khẩu không chính xác'),
+    check('password').exists().withMessage('Vui lòng nhập mật khẩu').notEmpty().withMessage('Không được để trống mật khẩu'),
 ]
-router.post('/login', loginValidator, (req, res) => {
+router.post('/login', loginValidator, (req, res, next) => {
+    console.log("login")
     let result = validationResult(req)
-    if (result.errors.length === 0) {
-        let { username, password } = req.body
-        let Userr = undefined
+    let { username, password } = req.body
 
+
+    if (result.errors.length === 0) {
+
+        var account = undefined
         users.findOne({ username: username })
             .then(acc => {
+
                 if (!acc) {
                     req.flash('error', 'Username không tồn tại')
                     return res.redirect('/user/login')
+                } else {
+                    account = acc
+                    console.log("acccount", acc)
+                    return bcrypt.compare(password, acc.password)
                 }
-                Userr = acc
-                return bcrypt.compare(password, acc.password)
+
             })
             .then(passwordMatch => {
                 if (!passwordMatch) {
@@ -51,29 +89,33 @@ router.post('/login', loginValidator, (req, res) => {
                 else {
                     let user = ({
                         username: username,
-                        name: Userr.name,
-                        department: Userr.department,
-                        role: Userr.role
+                        name: account.name,
+                        pic: account.avatar,
+                        department: account.department,
+                        role: account.role
                     })
                     req.session.user = user
+                    console.log("session: ", req.session.user)
                     return res.redirect('/')
                 }
             })
             .catch(e => {
-                req.flash('error', "dang nhap that bai")
+                req.flash('error', "Login Failed")
                 return res.redirect('/user/login')
             })
     }
     else {
-        let messages = result.mapped()
-        let message = ''
-        for (m in messages) {
-            message = messages[m]
-            break
-        }
-        req.flash('error', "Ko dang nhap dc")
-        res.redirect('/user/login')
+        //     let messages = result.mapped()
+        //     let message = ''
+        //     for (m in messages) {
+        //         message = messages[m]
+        //         break
+        //     }
+        //     req.flash('error', "Ko dang nhap dc")
+        //     res.redirect('/user/login')
+        return res.send(account, result)
     }
+
 })
 
 router.get('/register', (req, res) => {
@@ -100,7 +142,7 @@ router.post('/register', regisvalidator, async (req, res) => {
                     return res.redirect(req.get('referer'))
                 }
             })
-            .then(() => bcrypt.hash(password, 10))
+            .then(() => bcrypt.hashSync(password, 10))
             .then(hashed => {
 
                 let user = new users({
@@ -138,29 +180,6 @@ router.post('/register', regisvalidator, async (req, res) => {
 })
 
 
-users.findOne({ role: "admin" })
-    .then(async (acc) => {
-
-        if (!acc) {
-
-            let admin = new users({
-                username: "admin",
-                password: "admin",
-                role: "admin"
-            })
-            try {
-
-                var created_admin = await admin.save();
-                console.log("created_user", created_admin);
-
-            } catch (e) {
-                console.log("ERROR in create admin:  ", e)
-            }
-
-            admin.save();
-        }
-    });
-
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -181,7 +200,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 
                     let usernew = new UserSV({
                         email: email,
-                        role: "student",
+                        role: 3,
                         name: name,
                         avatar: pic
                     })
@@ -202,7 +221,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
                     name,
                     email,
                     pic,
-                    role: "student"
+                    role: 3
                 }
 
                 req.session.user = user
@@ -223,4 +242,7 @@ router.get('/logout', (req, res) => {
     req.session.destroy()
     res.redirect('/user/login')
 })
+
+
+
 module.exports = router;

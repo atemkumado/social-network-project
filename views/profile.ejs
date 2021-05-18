@@ -37,11 +37,12 @@
                     <% } %>
 
                 </div>
-                <% if(user.name === "admin"){%>
-                <a href="/user/management" class="btn btn-secondary" style="width: 120px;">System</a>
+                <a href="/user/logout" class="btn btn-secondary" style="width: 120px;">Logout</a>
+                <% if(user.username === "admin"){%>
+                <a href="/profile/system" class="btn btn-secondary" style="width: 120px;">System</a>
 
                 <%} %>
-                <a href="/user/logout" class="btn btn-secondary" style="width: 120px;">Logout</a>
+
 
             </div>
             <div class="col-sm-8 ">

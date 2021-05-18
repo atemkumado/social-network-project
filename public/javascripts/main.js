@@ -1,5 +1,5 @@
 //set up filepond module
-var i = 3;
+var i = 10;
 $(document).ready(() => {
 
     FilePond.registerPlugin(
@@ -15,7 +15,7 @@ $(document).ready(() => {
 
     })
     FilePond.parse(document.body);
-
+    $('.storage_comment').hide();
     $('.comment').hide();
     load(i)
 })
@@ -23,10 +23,6 @@ $(document).ready(() => {
 
 
 //
-
-function ShowCMT() {
-    $("div.comment").show();
-}
 
 
 
@@ -88,3 +84,11 @@ $(window).on("scroll", function () {
         load(i + 3);
     }
 });
+
+$('.show_comment').on('click', (event) => {
+    let id = event.target.id
+    $('#cmt_' + id).show();
+
+})
+
+

@@ -42,30 +42,31 @@
         <% } %>
 
     </div>
+
     <% if(typeof comments !== undefined) {%>
-    <% comments.forEach(comment =>{ %>
-    <% if(comment.article_id === article.id){ %>
+    <div class="mt-2 text-right"><a class="show_comment mr-2" style="color: rgb(80, 100, 100);" id="<%= article.id  %>">comment <i class="far fa-caret-down"></i></a>
+    </div>
+    <div class="storage_comment" id="cmt_<%= article.id  %>">
+        <% comments.forEach(comment =>{ %>
+        <% if(comment.article_id === article.id){ %>
 
 
-    <div class="card comment-container mt-2">
-        <div class="header">
-            <img class=" post__icon" src="<%= comment.user_avt %>" alt="avt">
-            <span><strong><%= comment.user_cmt %></strong></span>
+        <div class="card comment-container mt-3">
+            <div class="header">
+                <img class=" post__icon" src="<%= comment.user_avt %>" alt="avt">
+                <span><strong><%= comment.user_cmt %></strong></span>
+            </div>
+
+            <p class="card-content"><%= comment.content %> </p>
+            <% if(user.name == comment.user_cmt) {%>
+            <a class="btn m ml-auto" href="/comment/delete/<%= comment.id %>" style="position:absolute; right:0; top:0"
+                name="deleteComment">x</small></a>
+            <% } %>
         </div>
 
-
-
-        <p class="card-content"><%= comment.content %> </p>
-        <% if(user.name == comment.user_cmt) {%>
-        <a class="btn m ml-auto" href="/comment/delete/<%= comment.id %>" style="position:absolute; right:0; top:0"
-            name="deleteComment">x</small></a>
-        <% } %>
-
+        <%} %>
+        <%}) %>
     </div>
-
-
-    <%} %>
-    <%}) %>
     <%} %>
     <div class="card-footer mt-3">
 
@@ -73,15 +74,17 @@
             <input type="hidden" value="<%= user.id %>" name="user_id">
             <input type="hidden" value="<%= article.id %>" name="article_id">
             <div class="d-flex flex-row align-items-start"><img src="<%= user.pic  %> " alt="article"
-                    class="post__icon"><textarea class="form-control ml-1 shadow-none textarea"
-                    name="content"></textarea>
+                    class="post__icon"><input class="form-control ml-1 shadow-none textarea"
+                    name="content"></input>
+
             </div>
-            <div class="mt-2 text-right"><button class="btn cmt btn-outline-success" type="submit">Comment</button>
+            <div class="mt-2 text-right"><button class="btn cmt btn-outline-success" type="submit"><i class="far fa-paper-plane"></i> Send</button>
+            </div>
         </form>
 
     </div>
 </div>
-</div>
+
 
 
 

@@ -68,7 +68,7 @@
             <form class="modal-content edit-modal" method="POST">
                 <div class="modal-header">
                     <h5 class="modal__title" id="exampleModalLabel">Edit Announcement </h5>
-                    <input type="text" name="faculty" value=""></input>
+                    <input type="hidden" name="faculty" value=""></input>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -100,7 +100,7 @@
         <div class="modal-dialog" role="document">
             <form class="modal-content" action="/informs/add" method="POST">
                 <div class="modal-header">
-                    <input type="text" name="faculty" value="1"></input>
+                    <input type="hidden" name="faculty" value="1"></input>
                     <h5 class="modal__title" id="exampleModalLabel">Create Announcement</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

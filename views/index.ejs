@@ -20,35 +20,6 @@
         data-target="#postArticleModal" placeholder="What do you think ? " aria-describedby="basic-addon1" />
     </div>
 
-    <div class="modal fade show" id="postArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <form class="modal-content" action="/articles" method="POST">
-          <div class="modal-header">
-            <h5 class="modal__title" id="exampleModalLabel">Create post</h5>
-
-          </div>
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <div class="container article ">
-                <div class="row m-2"> <textarea type="text" class="form-control" name="content" style="height: 120px;"
-                    placeholder="What's on your mind ?"></textarea>
-                </div>
-                <div class="row m-2">
-
-                  <input type="image" name="image" class="filepond">
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary btn-post-article">Post</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <!-- ARTICLE CONTAINER-->
 
@@ -58,6 +29,7 @@
 
     <%} %>
   </div>
+  
 
   <!-- EDIT MODAL -->
 
@@ -95,6 +67,38 @@
     </div>
   </div>
 
+<!-- CREATE MODAL -->
+  <div class="modal fade show" id="postArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form class="modal-content" action="/articles" method="POST">
+        <div class="modal-header">
+          <h5 class="modal__title" id="exampleModalLabel">Create post</h5>
+
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <div class="container article ">
+              <div class="row m-2"> <textarea type="text" class="form-control" name="content" style="height: 120px;"
+                  placeholder="What's on your mind ?"></textarea>
+              </div>
+              <div class="row m-2">
+
+                <input type="image" name="image" class="filepond">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-post-article">Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
   <!-- Menu Informs -->
   <div class="col-sm-3" style="border-left: 0.1px solid; border-color: rgb(184, 186, 189);">
     <div class="component__Inform" style="background-color: white;">
@@ -128,11 +132,6 @@
 </div>
 </body>
 
-<script>
-
-
-
-</script>
 
 
 </html>
