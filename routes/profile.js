@@ -12,7 +12,9 @@ router.get('/', async (req, res) => {
 })
 
 
-router.get('/system', (req, res) => {
+router.post('/system', (req, res) => {
+    const { faculty, username, password } = req.body
+    console.log("data:  ", faculty, username, password)
     return res.send("Authentication")
 })
 module.exports = router

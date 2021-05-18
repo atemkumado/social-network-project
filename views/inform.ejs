@@ -1,12 +1,10 @@
 <div class="inform inform-container">
     <div class="inform-header">
         <div class="filter mb-2">
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="fillter()"
-                id="filter_faculty">
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" onclick="getFacultyOption()"
+                onchange="fillter()" id="faculty-select">
                 <option selected value="0">Select Faculty</option>
-                <option value="1">CNTT</option>
-                <option value="2">QTKD</option>
-                <option value="3">Law</option>
+
             </select>
         </div>
 
@@ -155,7 +153,7 @@
 
     function fillter() {
         $(".card").hide();
-        let fillter = $('#filter_faculty').val();
+        let fillter = $('#faculty-select').val();
 
         if (fillter != 0) {
             $("#card_" + fillter).show();

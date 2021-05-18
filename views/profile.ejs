@@ -24,79 +24,116 @@
 
 
                 </div>
+                <div class="profile-container text-center" style="flex-direction: column; ">
+                    <div class="well " style="padding-bottom: 30px; padding-left: 30px; background-color: white; ">
+                        <h3 class="text-danger"><span class="fa fa-google-plus"></span> Profile</h3>
+                        <% if(user){ %>
+                        <p style="padding-bottom: 10px;"><img src="<%=user.pic%>" width="100" height="100" alt=""></p>
 
-                <div class="well" style="padding-bottom: 30px; padding-left: 30px; background-color: white;">
-                    <h3 class="text-danger"><span class="fa fa-google-plus"></span> Profile</h3>
-                    <% if(user){ %>
-                    <p style="padding-bottom: 10px;"><img src="<%=user.pic%>" width="100" height="100" alt=""></p>
-
-                    <strong>Email</strong>: <%= user.email %><br>
-                    <strong>Full Name</strong>: <%= user.name %><br>
+                        <strong>Email</strong>: <%= user.email || user.username  %><br>
+                        <strong>Full Name</strong>: <%= user.name ||user.username %><br>
 
 
+                        <% } %>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="/user/logout" class="btn btn-secondary mt-2" style="width: 100px;">Logout</a>
+                    <% if(user.username === "admin"){%>
+                    <a class="btn btn-info mt-2 ml-3" style="width: 100px;" data-toggle="modal"
+                        data-target="#authenticationModal">System</a>
+
+                    <%} %>
+                </div>
+
+                <div id="authenticationModal" class="modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header ">
+                                <h4 class="modal-title" style="color: cadetblue;"><strong>Create Faculty
+                                        Account</strong></h4>
+
+                            </div>
+                            <form method="POST" action="/profile/system">
+                                <div class="modal-body p4">
+
+                                    <select id="faculty-select" name="faculty" class="mt-4" onclick="getFacultyOption()"
+                                        style="width: 440px; height: 35px; border-radius: 8px; border:0.5px solid rgb(199, 196, 196) ">
+                                        <option selected value="0">Select Faculty</option>
+
+                                    </select>
+                                    <input type="text" class="form-control  mt-4" placeholder="Username"
+                                        name="username">
+                                    <input type="text" class="form-control  mt-4" placeholder="Password"
+                                        name="password">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 ">
+            <% if(articles){%>
+            <% articles.forEach(article => { %>
+
+
+            <div class="card article">
+                <div class="card-header">
+
+                    <img src="<%= article.avatar %>" alt="article" class="header-icon">
+                    <div class="header-group ml-2">
+                        <span class="group-title"><strong><%= article.username %> </strong></span>
+                        <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
+                    </div>
+
+                    <div class="dropdown" style="margin-left: auto;">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                            <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
+                                    class="fas fa-trash-alt btn-del"></i></a>
+
+                            <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')"
+                                name="btn-edit-article" data-toggle="modal" data-target="#editArticleModal">
+                                <i class=" fas fa-edit btn-edit"></i></a>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text">
+                        <%= article.content %>
+                    </p>
+                    <% if (article.imageSrc){ %>
+
+                    <img src="<%=article.imageSrc%>" alt="img" class="card-image" id="<%= article.id %>">
                     <% } %>
 
                 </div>
-                <a href="/user/logout" class="btn btn-secondary" style="width: 120px;">Logout</a>
-                <% if(user.username === "admin"){%>
-                <a href="/profile/system" class="btn btn-secondary" style="width: 120px;">System</a>
-
-                <%} %>
-
-
             </div>
-            <div class="col-sm-8 ">
-                <% if(articles){%>
-                <% articles.forEach(article => { %>
-
-
-                <div class="card article">
-                    <div class="card-header">
-
-                        <img src="<%= article.avatar %>" alt="article" class="header-icon">
-                        <div class="header-group ml-2">
-                            <span class="group-title"><strong><%= article.username %> </strong></span>
-                            <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
-                        </div>
-
-                        <div class="dropdown" style="margin-left: auto;">
-                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
-                                        class="fas fa-trash-alt btn-del"></i></a>
-
-                                <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')"
-                                    name="btn-edit-article" data-toggle="modal" data-target="#editArticleModal">
-                                    <i class=" fas fa-edit btn-edit"></i></a>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="card-body">
-                        <p class="card-text">
-                            <%= article.content %>
-                        </p>
-                        <% if (article.imageSrc){ %>
-
-                        <img src="<%=article.imageSrc%>" alt="img" class="card-image" id="<%= article.id %>">
-                        <% } %>
-
-                    </div>
-                </div>
 
 
 
-                <% }); %>
-                <%} %>
-            </div>
+            <% }); %>
+            <%} %>
         </div>
+    </div>
 
     </div>
 
