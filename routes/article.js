@@ -6,7 +6,7 @@ const router = express.Router()
 const imageMineTypes = ['image/jpeg', 'image/png', 'image/gif']
 
 router.post('/', async (req, res) => {
-    console.log("OK")
+    console.log("OK",req.session.user)
     const user_id = req.session.user.id;
     const username = req.session.user.name;
     const avatar = req.session.user.pic;

@@ -12,12 +12,13 @@
             <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
         </div>
 
+
+        <% if(user.id === article.user_id){%>
         <div class="dropdown" style="margin-left: auto;">
             <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <i class="fas fa-ellipsis-v"></i>
             </button>
-
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                 <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
@@ -28,7 +29,9 @@
                     <i class=" fas fa-edit btn-edit"></i></a>
 
             </div>
+
         </div>
+        <% } %>
 
     </div>
 
@@ -43,9 +46,12 @@
 
     </div>
 
-    <% if(typeof comments !== undefined) {%>
-    <div class="mt-2 text-right"><a class="show_comment mr-2" style="color: rgb(80, 100, 100);" id="<%= article.id  %>">comment <i class="far fa-caret-down"></i></a>
+    <% if(comments.length >0 ) {%>
+    <div class="mt-2 text-right">
+        <a class="show_comment mr-2" style="color: rgb(80, 100, 100);" data-check="false"
+            onclick="loadComment('<%= article.id  %>')">comment <i class="far fa-caret-down"></i></a>
     </div>
+
     <div class="storage_comment" id="cmt_<%= article.id  %>">
         <% comments.forEach(comment =>{ %>
         <% if(comment.article_id === article.id){ %>
@@ -74,11 +80,11 @@
             <input type="hidden" value="<%= user.id %>" name="user_id">
             <input type="hidden" value="<%= article.id %>" name="article_id">
             <div class="d-flex flex-row align-items-start"><img src="<%= user.pic  %> " alt="article"
-                    class="post__icon"><input class="form-control ml-1 shadow-none textarea"
-                    name="content"></input>
+                    class="post__icon"><input class="form-control ml-1 shadow-none textarea" name="content"></input>
 
             </div>
-            <div class="mt-2 text-right"><button class="btn cmt btn-outline-success" type="submit"><i class="far fa-paper-plane"></i> Send</button>
+            <div class="mt-2 text-right"><button class="btn cmt btn-outline-success" type="submit"><i
+                        class="far fa-paper-plane"></i> Send</button>
             </div>
         </form>
 

@@ -3,27 +3,22 @@ var router = express.Router();
 var bcrypt = require('bcrypt')
 var passport = require('passport')
 const flash = require('express-flash')
-var session = require('express-session')
-var methodOverride = require('method-override');
+
 const users = require('../models/user');
 const UserSV = require('../models/usersv');
 const { check, validationResult } = require('express-validator')
-const fs = require('fs')
-var bodyParser = require("body-parser")
-const app = require('../app');
+
 require("../passport-setup")
 
 router.use(passport.initialize())
 router.use(passport.session())
 
 function createAdmin(req, res, next) {
-    users.findOne({ username: "admin" })
+    users.findOne({ name: "admin" })
         .then(async (acc) => {
-
             if (!acc) {
-
                 let admin = new users({
-                    username: "admin",
+                    name: "admin",
                     password: bcrypt.hashSync("admin", 10),
                     avatar: "/images/admin.png",
                     role: 1
@@ -36,27 +31,24 @@ function createAdmin(req, res, next) {
                 } catch (e) {
                     console.log("ERROR in create admin:  ", e)
                 }
-
-                admin.save();
-                next();
-            } else {
-                next();
             }
+            next();
         });
 }
 
 router.get('/login', createAdmin, (req, res) => {
+    console.log('ERROR', req.flash('error'));
     if (req.session.user) {
         return res.redirect('/')
     }
-    const error = req.flash('error') || ''
+    const error = req.flash('error');
     res.render('login', { error })
 })
 
 
 
 const loginValidator = [
-    check('username').exists().withMessage('Vui lòng nhập tên đăng nhập').notEmpty().withMessage('Không được để trống tên đăng nhập').isLength({ min: 5 }).withMessage('Tên đăng nhập phải từ 5 ký tự'),
+    check('username').exists().withMessage('Vui lòng nhập tên đăng nhập').notEmpty().withMessage('Không được để trống tên đăng nhập').isLength({ min: 3 }).withMessage('Tên đăng nhập phải từ 3 ký tự'),
     check('password').exists().withMessage('Vui lòng nhập mật khẩu').notEmpty().withMessage('Không được để trống mật khẩu'),
 ]
 router.post('/login', loginValidator, (req, res, next) => {
@@ -68,36 +60,47 @@ router.post('/login', loginValidator, (req, res, next) => {
     if (result.errors.length === 0) {
 
         var account = undefined
-        users.findOne({ username: username })
+        users.findOne({ name: username })
             .then(acc => {
-
+                let check = false;
                 if (!acc) {
-                    req.flash('error', 'Username không tồn tại')
-                    return res.redirect('/user/login')
+
+                    return check;
                 } else {
                     account = acc
                     console.log("acccount", acc)
-                    return bcrypt.compare(password, acc.password)
+                    return check = true;
+
                 }
 
             })
-            .then(passwordMatch => {
-                if (!passwordMatch) {
-                    req.flash('error', 'Mật khẩu không chính xác')
-                    return res.redirect('/user/login')
-                }
-                else {
-                    let user = ({
-                        username: username,
-                        name: account.name,
-                        pic: account.avatar,
-                        department: account.department,
-                        role: account.role
+            .then(check => {
+                console.log("check", req.flash('error'))
+                if (check) {
+                    bcrypt.compare(password, account.password, function (err, result) {
+                        if (result) {
+                            user = ({
+                                id: account._id,
+                                username: username,
+                                name: account.name,
+                                pic: account.avatar,
+                                department: account.department,
+                                role: account.role
+                            })
+                            req.session.user = user;
+                            return res.redirect('/')
+
+                        } else {
+                            req.flash('error', 'Mật khẩu không chính xác')
+                            return res.render('login', { error: req.flash('error') })
+                        }
                     })
-                    req.session.user = user
-                    console.log("session: ", req.session.user)
-                    return res.redirect('/')
+
+                } else {
+                    req.flash('error', 'Username không tồn tại')
+                    return res.render('login', { error: req.flash('error') })
                 }
+
             })
             .catch(e => {
                 req.flash('error', "Login Failed")
@@ -105,15 +108,15 @@ router.post('/login', loginValidator, (req, res, next) => {
             })
     }
     else {
-        //     let messages = result.mapped()
-        //     let message = ''
-        //     for (m in messages) {
-        //         message = messages[m]
-        //         break
-        //     }
-        //     req.flash('error', "Ko dang nhap dc")
-        //     res.redirect('/user/login')
-        return res.send(account, result)
+        let messages = result.mapped()
+        let message
+        for (m in messages) {
+            message = messages[m].msg
+            break
+        }
+        req.flash('error', message)
+        return res.render('login', { error: req.flash('error') })
+
     }
 
 })

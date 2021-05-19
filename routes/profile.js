@@ -1,6 +1,7 @@
 const express = require('express')
-const UserSV = require('../models/usersv');
+const User = require('../models/user');
 const Article = require('./../models/article')
+var bcrypt = require('bcrypt')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
@@ -12,9 +13,24 @@ router.get('/', async (req, res) => {
 })
 
 
-router.post('/system', (req, res) => {
+router.post('/system', async (req, res, next) => {
     const { faculty, username, password } = req.body
-    console.log("data:  ", faculty, username, password)
-    return res.send("Authentication")
+
+    const user = new User({
+        name: username,
+        password: bcrypt.hashSync(password, 10),
+        avatar: "/images/office.png",
+        department: faculty,
+        role: 2,
+    })
+    try {
+        const newUser = await user.save()
+        console.log(newUser)
+        next();
+    } catch (e) {
+        console.log(e)
+    }
+
+    return res.redirect('/profile')
 })
 module.exports = router

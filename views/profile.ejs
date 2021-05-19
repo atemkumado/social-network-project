@@ -10,28 +10,21 @@
 
 <body>
     <div class="container">
-
-
-
-
-
         <div class="row">
 
             <!-- GOOGLE INFORMATION -->
+            <div class="page-header text-center ">
+                <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+            </div>
             <div class="col-sm-4">
-                <div class="page-header text-center ">
-                    <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-
-
-                </div>
                 <div class="profile-container text-center" style="flex-direction: column; ">
                     <div class="well " style="padding-bottom: 30px; padding-left: 30px; background-color: white; ">
                         <h3 class="text-danger"><span class="fa fa-google-plus"></span> Profile</h3>
                         <% if(user){ %>
                         <p style="padding-bottom: 10px;"><img src="<%=user.pic%>" width="100" height="100" alt=""></p>
 
-                        <strong>Email</strong>: <%= user.email || user.username  %><br>
-                        <strong>Full Name</strong>: <%= user.name ||user.username %><br>
+                        <strong>Email</strong>: <%= user.email || user.name  %><br>
+                        <strong>Full Name</strong>: <%= user.name %><br>
 
 
                         <% } %>
@@ -40,7 +33,7 @@
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="/user/logout" class="btn btn-secondary mt-2" style="width: 100px;">Logout</a>
-                    <% if(user.username === "admin"){%>
+                    <% if(user.name === "admin"){%>
                     <a class="btn btn-info mt-2 ml-3" style="width: 100px;" data-toggle="modal"
                         data-target="#authenticationModal">System</a>
 
@@ -65,7 +58,7 @@
                                     </select>
                                     <input type="text" class="form-control  mt-4" placeholder="Username"
                                         name="username">
-                                    <input type="text" class="form-control  mt-4" placeholder="Password"
+                                    <input type="password" class="form-control  mt-4" placeholder="Password"
                                         name="password">
                                 </div>
 
@@ -81,8 +74,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-8 ">
+             <div class="col-sm-8 ">
             <% if(articles){%>
             <% articles.forEach(article => { %>
 
@@ -95,25 +87,6 @@
                         <span class="group-title"><strong><%= article.username %> </strong></span>
                         <p class="group-subtitle mb-2 text-muted"><%= article.createAt.toLocaleString()%> </p>
                     </div>
-
-                    <div class="dropdown" style="margin-left: auto;">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                            <a class="dropdown-item btn-del" href="/articles/delete/<%= article.id %>"><i
-                                    class="fas fa-trash-alt btn-del"></i></a>
-
-                            <a class="dropdown-item btn-edit" onclick="editArticle('<%= article.id %>')"
-                                name="btn-edit-article" data-toggle="modal" data-target="#editArticleModal">
-                                <i class=" fas fa-edit btn-edit"></i></a>
-
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="card-body">
@@ -133,6 +106,8 @@
             <% }); %>
             <%} %>
         </div>
+        </div>
+       
     </div>
 
     </div>
