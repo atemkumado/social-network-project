@@ -4,7 +4,7 @@
   "main": "./bin/www",
   "node": "14.16.0",
   "scripts": {
-    "start": "nodemon --inspect ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
