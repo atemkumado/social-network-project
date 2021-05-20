@@ -7,9 +7,15 @@ const router = express.Router()
 router.post('/', async (req, res) => {
 
     const { user_id, article_id, content } = req.body
-
-    const user_cmt = req.session.user.name
-    const user_avt = req.session.user.pic
+    var user = req.session.user
+    const user_cmt
+    if(user.role < 3 ){
+        user_cmt = user.faculty
+    }else{
+        user_cmt = user.name
+    }
+    
+    const user_avt = user.pic
 
 
     const comment = new Comment({
