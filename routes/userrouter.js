@@ -21,6 +21,8 @@ function createAdmin(req, res, next) {
                     name: "admin",
                     password: bcrypt.hashSync("admin", 10),
                     avatar: "/images/admin.png",
+                    faculty: "Admin",
+                    department: -1,
                     role: 1
                 })
                 try {
@@ -84,6 +86,7 @@ router.post('/login', loginValidator, (req, res, next) => {
                                 username: username,
                                 name: account.name,
                                 pic: account.avatar,
+                                faculty: account.faculty,
                                 department: account.department,
                                 role: account.role
                             })
@@ -120,68 +123,6 @@ router.post('/login', loginValidator, (req, res, next) => {
     }
 
 })
-
-router.get('/register', (req, res) => {
-    const error = req.flash('error') || ''
-    res.render('register.ejs', { error })
-})
-
-const regisvalidator = [
-    check('username').exists().withMessage('Vui lòng nhập tên đăng nhập').notEmpty().withMessage('Không được để trống tên đăng nhập').isLength({ min: 5 }).withMessage('Tên đăng nhập phải từ 5 ký tự'),
-    check('name').exists().withMessage('Vui lòng nhập tên người dùng').notEmpty().withMessage('Không được để trống tên người dùng').isLength({ min: 6 }).withMessage('Tên người dùng phải từ 6 ký tự'),
-    check('password').exists().withMessage('Vui lòng nhập mật khẩu').notEmpty().withMessage('Không được để trống mật khẩu').isLength({ min: 6 }).withMessage('Mật khẩu phải từ 6 ký tự'),
-
-]
-
-
-router.post('/register', regisvalidator, async (req, res) => {
-    let rs = validationResult(req)
-    if (rs.errors.length === 0) {
-        let { username, password, name, department } = req.body
-        users.findOne({ username: username })
-            .then(acc => {
-                if (acc) {
-                    req.flash('error', "Tài khoản đã tồn tại")
-                    return res.redirect(req.get('referer'))
-                }
-            })
-            .then(() => bcrypt.hashSync(password, 10))
-            .then(hashed => {
-
-                let user = new users({
-                    username: username,
-                    password: hashed,
-                    name: name,
-                    department: department,
-                    role: "manager"
-                })
-                return user.save()
-
-            })
-            .then(() => {
-
-                return res.redirect(req.get('referer'))
-            })
-            .catch(e => {
-                req.flash('error', 'Đăng ký thất bại')
-                return res.redirect(req.get('referer'))
-            })
-
-    }
-    else {
-        let mess = rs.mapped()
-        let mes = ''
-        for (m in mess) {
-            mes = mess[m].msg
-            break
-        }
-        req.flash('error', "Vui lòng nhập đầy đủ thông tin")
-        res.redirect(req.get('referer'))
-    }
-
-
-})
-
 
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

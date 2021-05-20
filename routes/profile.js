@@ -14,13 +14,14 @@ router.get('/', async (req, res) => {
 
 
 router.post('/system', async (req, res, next) => {
-    const { faculty, username, password } = req.body
+    const { faculty_id, username, password, faculty } = req.body
 
     const user = new User({
         name: username,
         password: bcrypt.hashSync(password, 10),
         avatar: "/images/office.png",
-        department: faculty,
+        faculty,
+        department: faculty_id,
         role: 2,
     })
     try {

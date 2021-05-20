@@ -7,13 +7,13 @@ var indexRouter = require("./routes/index");
 
 var articleRouter = require("./routes/article")
 var informRouter = require("./routes/inform")
-var detailRouter = require("./routes/detail")
+
 var profileRouter = require("./routes/profile")
 var commentRouter = require("./routes/comment")
 
 const flash = require('express-flash')
 const session = require('express-session')
-const fs = require('fs')
+
 require("./passport-setup")
 var UserRouter = require("./routes/userrouter")
 
@@ -34,6 +34,7 @@ mongoose.connect('mongodb://localhost/social-network', {
 var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+
 // view engine setup
 
 app.set("view engine", "ejs");
@@ -85,7 +86,7 @@ app.use("/", indexRouter)
 
 app.use("/articles", articleRouter)
 app.use("/informs", informRouter)
-app.use("/detail", detailRouter)
+
 app.use("/profile", profileRouter)
 app.use("/comment", commentRouter)
 

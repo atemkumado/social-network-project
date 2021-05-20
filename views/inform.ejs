@@ -7,23 +7,23 @@
 
             </select>
         </div>
-
+        <% if(user.role<3){%>
         <button type="button" class="btn btn-secondary btn-add-inform" data-toggle="modal"
             data-target="#postInformModal">Add new Inform</button>
+        <%} %>
+
+
     </div>
     <div class="inform-body" id="container">
         <% if( informs ){  %>
         <% informs.forEach( inform =>{ %>
 
-
-        <div class="card inform-card mt-3" id="card_<%= inform.faculty %>">
+        <div class="card inform-card mt-3" id="card_<%= inform.faculty_id %>">
             <div class="card-header">
-
                 <div class="header-group">
-
                     <h5 class="group-title"> <%= inform.title %> </h5>
                     <div class="group-subtitle mb-2 text-muted" id="subtitle">
-                        <span class="user_created"><%= inform.user_created %> </span>
+                        <span class="user_created"><%= inform.faculty %> </span>
                         <span class=" created"> | Date Submitted:<%= inform.createAt.toLocaleString()%></span>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text text-truncate"><%= inform.content %> </p>
-                <a href="/detail/<%= inform.id %> " class="card-link">Xem thêm</a>
+                <a href="informs/detail/<%= inform.id %> " class="card-link">Xem thêm</a>
             </div>
         </div>
         <% }) %>
@@ -60,11 +60,13 @@
 
     </div>
 
+    <!-- EDIT INFORM MODAL -->
     <div class="modal fade show" id="editInformModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form class="modal-content edit-modal" method="POST">
                 <div class="modal-header">
+                    <input class="form-control" name="faculty_id" type="hidden">
                     <h5 class="modal__title" id="exampleModalLabel">Edit Announcement </h5>
                     <input type="hidden" name="faculty" value=""></input>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -74,6 +76,11 @@
                 <div class="modal-body">
                     <div class="input-group mb-3">
                         <div class="container">
+                            <div class="row m-2">
+                                <input class="form-control" name="faculty" type="hidden"
+                                    value="<%= user.department  %>">
+
+                            </div>
                             <div class="row m-2">
                                 <input type="text" class="form-control" name="title" placeholder="Title">
                             </div>
@@ -94,11 +101,12 @@
         </div>
     </div>
 
+    <!-- CREATE INFORM MODAL -->
     <div class="modal fade show" id="postInformModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form class="modal-content" action="/informs/add" method="POST">
                 <div class="modal-header">
-                    <input type="hidden" name="faculty" value="1"></input>
+                    <input class="form-control" name="faculty_id" type="hidden" value="<%= user.department  %>">
                     <h5 class="modal__title" id="exampleModalLabel">Create Announcement</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -107,6 +115,9 @@
                 <div class="modal-body">
                     <div class="input-group mb-3">
                         <div class="container">
+                            <div class="row m-2">
+                                <input class="form-control" name="faculty" type="hidden" value="<%= user.faculty  %>">
+                            </div>
                             <div class="row m-2">
                                 <input type="text" class="form-control" name="title" placeholder="Title">
                             </div>
@@ -153,8 +164,9 @@
 
     function fillter() {
         $(".card").hide();
-        let fillter = $('#faculty-select').val();
 
+        let fillter = $('#faculty-select').val();
+        console.log(fillter)
         if (fillter != 0) {
             $("#card_" + fillter).show();
         } else {

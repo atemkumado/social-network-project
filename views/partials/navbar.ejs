@@ -1,7 +1,14 @@
 <div class="header pa">
     <nav class="navbar navbar-light bg-dark">
         <a class="navbar-brand pl-3" style="color:white" href="/"> <span class="fa fa-home"></span> Homepage</a>
-        <span class="navbar-username" style="color: aliceblue;"><%= user.name %> </span>
+        <span class="navbar-username" style="color: aliceblue;">
+            <% if(user.role == 2){ %>
+            <%= user.faculty %>
+            <%}else{%>
+            <%= user.name %>
+            <%} %>
+
+        </span>
         <a href="/profile">
 
             <img src="<%= user.pic  %> " alt="Avatar" class="navbar-avatar mr-2">

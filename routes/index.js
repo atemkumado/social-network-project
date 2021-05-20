@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var app = require('../app');
 var expressLayouts = require('express-ejs-layouts');
-// const { route } = require('./user');
 
 const Article = require('./../models/article')
 const Comment = require('./../models/comment')

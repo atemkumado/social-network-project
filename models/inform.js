@@ -10,6 +10,10 @@ const informSchema = new Schema({
         required: true
     },
     faculty: {
+        type: String,
+        required: true
+    },
+    faculty_id: {
         type: Number,
         required: true
     },

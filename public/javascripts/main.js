@@ -36,10 +36,11 @@ function getFacultyOption() {
 
         })
     }
-
-
-
-
+}
+function getFacultyName(sel){
+    name= sel.options[sel.selectedIndex].text
+    console.log("name",name)
+    $('#faculty_name').val(name)
 }
 
 
@@ -90,7 +91,6 @@ function loadComment(id) {
         $('#cmt_' + id).hide();
         $('#cmt_' + id).data("check", false);
     }
-
 
 }
 

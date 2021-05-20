@@ -29,7 +29,7 @@
 
     <%} %>
   </div>
-  
+
 
   <!-- EDIT MODAL -->
 
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-<!-- CREATE MODAL -->
+  <!-- CREATE MODAL -->
   <div class="modal fade show" id="postArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -114,7 +114,8 @@
           <li class="list-group-item">
             <div class="card">
               <div class="card-header" style="background-color: rgb(196, 200, 209);">
-                <a href="/detail/<%= inform.id %> " style="color: black;" class="card-link"> <%= inform.title %></a>
+                <a href="informs/detail/<%= inform.id %> " style="color: black;" class="card-link">
+                  <%= inform.title %></a>
               </div>
               <div class="card-body text-truncate" style="background-color: rgb(250, 250, 250);"><%= inform.content %>
               </div>

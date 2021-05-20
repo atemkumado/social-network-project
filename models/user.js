@@ -9,8 +9,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    faculty:String, //faculty Name
     avatar: String,
-    department: Number,
+    department: Number,//faculty ID 
     role: String
 
 });
