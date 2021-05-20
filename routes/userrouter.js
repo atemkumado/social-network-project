@@ -34,10 +34,13 @@ function createAdmin(req, res, next) {
                     console.log("ERROR in create admin:  ", e)
                     next(e);
                 }
-            } 
+            }
             next();
-            
 
+
+        }).catch(err => {
+            console.log("ERROR in create admin:  ", e)
+            return res.status(500);
         });
 }
 

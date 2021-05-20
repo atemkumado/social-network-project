@@ -24,7 +24,7 @@ var bodyParser = require("body-parser")
 
 // setup mongoose
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/social-network', {
+mongoose.connect('mongodb+srv://admin:admin@cluster0.ph4fs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
