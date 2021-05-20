@@ -39,12 +39,14 @@ function createAdmin(req, res, next) {
 }
 
 router.get('/login', createAdmin, (req, res) => {
-    console.log('ERROR', req.flash('error'));
+
     if (req.session.user) {
         return res.redirect('/')
+    } else {
+        const error = req.flash('error') || "";
+        return res.render('login', { error })
     }
-    const error = req.flash('error');
-    res.render('login', { error })
+
 })
 
 
