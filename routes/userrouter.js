@@ -25,16 +25,20 @@ function createAdmin(req, res, next) {
                     department: -1,
                     role: 1
                 })
-                try {
 
+                try {
                     var created_admin = await admin.save();
                     console.log("created_user", created_admin);
+                    next();
 
                 } catch (e) {
                     console.log("ERROR in create admin:  ", e)
+                    next();
                 }
+            } else {
+                next();
             }
-            next();
+
         });
 }
 
