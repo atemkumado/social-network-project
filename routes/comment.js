@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
 
     const { user_id, article_id, content } = req.body
     var user = req.session.user
-    const user_cmt
+    var user_cmt
     if(user.role < 3 ){
         user_cmt = user.faculty
     }else{
