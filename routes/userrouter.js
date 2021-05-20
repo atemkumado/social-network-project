@@ -29,15 +29,14 @@ function createAdmin(req, res, next) {
                 try {
                     var created_admin = await admin.save();
                     console.log("created_user", created_admin);
-                    next();
 
                 } catch (e) {
                     console.log("ERROR in create admin:  ", e)
-                    next();
+                    next(e);
                 }
-            } else {
-                next();
-            }
+            } 
+            next();
+            
 
         });
 }
