@@ -19,8 +19,7 @@ var UserRouter = require("./routes/userrouter")
 
 var passport = require("passport")
 var bodyParser = require("body-parser")
-var LocalStrategy = require("passport-local")
-var passportLocalMongoose = require("passport-local-mongoose")
+
 
 
 // setup mongoose
