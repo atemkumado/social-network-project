@@ -66,7 +66,7 @@ function authChecker(req, res, next) {
         next();
     } else {
         error = ""
-        res.redirect("/user/login");
+        return res.redirect("/user/login");
     }
 }
 
