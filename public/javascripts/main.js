@@ -114,4 +114,68 @@ $(window).on("scroll", function () {
 
 
 
+    function editInform(id) {
+        let informs = `<%- JSON.stringify(informs) %>`
+        informs = JSON.parse(informs)
+        informs.forEach(inform => {
+            if (inform._id == id) {
+                const title = inform.title;
+                const content = inform.content;
+                console.log(title, content);
 
+
+                $('[name="title"]').val(title);
+                $('[name="content"]').val(content);
+
+                $('.edit-modal').attr("action", `/informs/update/${id}` + "?_method=PUT");
+            }
+        })
+    }
+
+    function editInform(id) {
+        let informs = `<%- JSON.stringify(informs) %>`
+        informs = JSON.parse(informs)
+        informs.forEach(inform => {
+            if (inform._id == id) {
+                const title = inform.title;
+                const content = inform.content;
+                console.log(title, content);
+
+
+                $('[name="title"]').val(title);
+                $('[name="content"]').val(content);
+
+                $('.edit-modal').attr("action", `/informs/update/${id}` + "?_method=PUT");
+            }
+        })
+    }
+
+
+
+    function fillter() {
+        $(".card").hide();
+
+        let fillter = $('#faculty-select').val();
+
+        console.log(fillter)
+        if (fillter != 0) {
+            $(".card." + fillter).show();
+        } else {
+            $(".card").show();
+        }
+
+    }
+
+    function fillter() {
+        $(".card").hide();
+
+        let fillter = $('#faculty-select').val();
+
+        console.log(fillter)
+        if (fillter != 0) {
+            $(".card." + fillter).show();
+        } else {
+            $(".card").show();
+        }
+
+    }
